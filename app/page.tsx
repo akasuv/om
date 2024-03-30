@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
 import { Card, CardContent } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
+import { Disc3 } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -14,6 +14,9 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Link from "next/link";
+import NewSongs from "@/components/NewSongs";
+import Recommendation from "@/components/Recommendation";
+import Posters from "@/components/Posters";
 
 const titles = [
   { name: "发现音乐", link: "/discover" },
@@ -28,23 +31,23 @@ const pictures = [
   "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzh8fG11c2ljfGVufDB8fDB8fHww",
 ];
 const musicRec = [
-  { name: "鲜花", pic: "/images/鲜花.jpeg" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg" },
+  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
+  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
+  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
+  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
+  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
+  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
+  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
+  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
 ];
 const newRec = [
-  { name: "鲜花", pic: "/images/鲜花.jpeg" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg" },
+  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
+  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
+  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
+  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
+  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
+  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
+  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
 ];
 
 export default function Home() {
@@ -52,84 +55,10 @@ export default function Home() {
     Autoplay({ delay: 2000, stopOnInteraction: true }),
   );
   return (
-    <div>
-      {/* 轮播图 */}
-
-      <div className=" w-full">
-        <Carousel
-          plugins={[plugin.current]}
-          className=""
-          onMouseEnter={plugin.current.stop}
-          onMouseLeave={plugin.current.reset}
-        >
-          <CarouselContent>
-            {pictures.map((item, index) => (
-              <CarouselItem key={index}>
-                <div className="">
-                  <Card className="border-white">
-                    <CardContent className="p-0">
-                      <img src={item} className="w-full h-80 object-cover" />
-                    </CardContent>
-                  </Card>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          {/* <CarouselPrevious />
-          <CarouselNext /> */}
-        </Carousel>
-      </div>
-      {/* 歌曲推荐 */}
-      <div className="flex items-center flex-col ml-60">
-        <div>
-          <div className="py-3 px-1 text-lg flex flex-row w-full">
-            {" "}
-            <img src="/images/music.png" className="w-6 h-6 mr-[7px]" />
-            歌曲推荐
-          </div>
-          <div className="flex flex-row flex-wrap gap-x-6 w-9/12 ml-1/12">
-            {musicRec.map((item, index) => {
-              return (
-                <div className="h-50 mb-2 hover:text-orange-400" key={index}>
-                  <Link href="/song">
-                    <img src={item.pic} className="rounded h-48" />
-                    <a className="ml-[3px]">{item.name}</a>
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-      {/* 新歌上架 */}
-      <div className="">
-        <div className="py-3 px-1 text-lg flex flex-row ml-60">
-          {" "}
-          <img src="/images/music.png" className="w-6 h-6 mr-[7px]" /> 新歌上架
-        </div>
-        <div className="w-[770px] border-gray-100 border-[1px] p-2 rounded ml-[280px]">
-          <Carousel
-            opts={{
-              align: "start",
-            }}
-            className=""
-          >
-            <CarouselContent>
-              {newRec.map((item, index) => (
-                <CarouselItem key={index} className="lg:basis-1/4">
-                  <div className="p-1">
-                    <Card>
-                      <img src={item.pic} className="" />
-                    </Card>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </div>
-      </div>
+    <div className="w-[800px] mx-auto flex flex-col gap-y-4 pt-8">
+      <Posters />
+      <NewSongs />
+      <Recommendation />
     </div>
   );
 }

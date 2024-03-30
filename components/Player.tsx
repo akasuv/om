@@ -1,5 +1,5 @@
+"use client";
 import React from "react";
-import { Progress } from "@/components/ui/progress";
 import { PlayCircle, SkipForward, SkipBack, PauseCircle } from "lucide-react";
 import ReactPlayer from "react-player";
 
@@ -8,7 +8,12 @@ const Player = () => {
   const playerRef = React.createRef<ReactPlayer>();
   const [progress, setProgress] = React.useState(0);
   const [seekTo, setSeekTo] = React.useState(0);
+  const [mounted, setMounted] = React.useState(false);
   const [seeking, setSeeking] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handlePlay = () => {
     setPlaying((prev) => !prev);
@@ -28,7 +33,7 @@ const Player = () => {
     playerRef.current?.seekTo(parseFloat(e.target.value));
   };
 
-  return (
+  return mounted ? (
     <div className="fixed bottom-0 left-0 w-full h-[100px] flex flex-col items-center gap-y-4 bg-white shadow-xl rounde-2xl shadow-black p-4">
       <ReactPlayer
         className="hidden"
@@ -54,7 +59,7 @@ const Player = () => {
       </div>
       <div className="w-1/2 relative">
         <div
-          className="absolute top-1/2 left-0 h-full bg-black rounded-full z-10 h-[6px] -translate-y-1/2"
+          className="absolute top-1/2 left-0 bg-black rounded-full z-10 h-[6px] -translate-y-1/2"
           style={{
             width: `${progress * 100}%`,
           }}
@@ -72,7 +77,7 @@ const Player = () => {
         />
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default Player;

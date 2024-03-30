@@ -10,8 +10,11 @@ import {
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { get } from "@/lib/requests";
+import { Artist, Song, Album } from "@/types";
 
 const singer = [
   { name: "周杰伦", pic: "/images/心.avif", type: "男歌手" },
@@ -25,40 +28,54 @@ const singerSong = [
 ];
 
 const SearchNew = () => {
+  const searchParams = useSearchParams();
+  const query = searchParams.get("query");
   const [playIndex, setPlayIndex] = useState(-1);
   const [adding, setAdding] = useState(-1);
+  const [songs, setSongs] = useState<Song[]>([]);
+  const [singers, setSingers] = useState<Artist[]>([]);
+  const [albums, setAlbums] = useState<Album[]>([]);
+
+  useEffect(() => {
+    get(`/search?name=${query}`).then((res) => {
+      const songs = res.filter((item: any) => item.type === "song");
+      const singers = res.filter((item: any) => item.type === "artist");
+      const albums = res.filter((item: any) => item.type === "album");
+
+      setSongs(songs);
+      setSingers(singers);
+      setAlbums(albums);
+    });
+  }, [query]);
+
   return (
     <div className="flex justify-center">
-      <div className=" w-[1200px] ml-[200px]">
-        <div className="text-lg flex flex-row ml-2 my-3">
-          您可能感兴趣的歌手
-          <img src="/images/可爱的.png" className="w-7 h-7 ml-4" />
-        </div>
-        <div>
-          {singer.map((item, index) => (
-            <div key={index} className="flex items-center space-x-4">
-              <div className="w-[130px] h-[130px] p-3">
-                <Avatar className="w-full h-full">
-                  <AvatarImage src={item.pic} className="" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-              </div>
-              <div className="flex flex-row ml-[15px]">
-                <div className="text-2xl font-semibold hover:text-orange-400">
-                  <Link href="/singer">{item.name}</Link>
+      <div className="">
+        <p className="text-lg font-bold">歌手</p>
+        <div className="mt-8">
+          {singers.map((item) => {
+            return (
+              <Link
+                key={item.name}
+                href={"/singer/" + item.id}
+                className="font-bold w-fit"
+              >
+                <div className="w-fit flex flex-col items-center gap-y-4">
+                  <Avatar className="w-[100px] h-[100px]">
+                    <AvatarImage
+                      className="object-cover"
+                      src={item.profileImage}
+                    />
+                    <AvatarFallback>{item.name}</AvatarFallback>
+                  </Avatar>
+                  <div>{item.name}</div>
                 </div>
-                <div className="text-xs mt-2 ml-5">{item.type}</div>
-                <div className="ml-[500px] text-sm">
-                  <div>
-                    <Button className="bg-orange-400 ">+ 播放热门歌曲</Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
+              </Link>
+            );
+          })}
         </div>
-        <div>
-          <div className="text-lg flex flex-row ml-2 my-3">
+        <div className="mt-16">
+          <div className="text-lg flex flex-row ml-2 my-3 font-bold">
             单曲精选 <img src="/images/可爱的.png" className="w-7 h-7 ml-4" />
           </div>
           <div className="w-[1000px]">
