@@ -13,6 +13,7 @@ const SingerFilter = () => {
   const [type, setType] = useState("全部");
   const [area, setArea] = useState("全部");
   const [singers, setSingers] = useState<Artist[]>([]);
+
   useEffect(() => {
     get("/artists").then((res) => setSingers(res));
   }, []);
@@ -21,6 +22,7 @@ const SingerFilter = () => {
     <div className="w-2/3 mx-auto pt-8">
       <div className="flex flex-col gap-y-4">
         <div className="flex flex-row gap-x-10 text-lg">
+          <p>类型</p>
           {typeList.map((item, index) => {
             return (
               <p
@@ -39,6 +41,7 @@ const SingerFilter = () => {
           })}
         </div>
         <div className="flex flex-row gap-x-10 text-lg">
+          <p>地区</p>
           {areaList.map((item) => {
             return (
               <p
@@ -58,26 +61,29 @@ const SingerFilter = () => {
         </div>
       </div>
       <div className="flex flex-row gap-x-6 mt-10 flex-wrap">
-        {singers.map((item) => {
-          return (
-            <Link
-              key={item.name}
-              href={"/singer/" + item.id}
-              className="font-bold"
-            >
-              <div className="flex flex-col items-center gap-y-4">
-                <Avatar className="w-[100px] h-[100px]">
-                  <AvatarImage
-                    className="object-cover"
-                    src={item.profileImage}
-                  />
-                  <AvatarFallback>{item.name}</AvatarFallback>
-                </Avatar>
-                <div>{item.name}</div>
-              </div>
-            </Link>
-          );
-        })}
+        {singers
+          .filter((item) => item.type === type || type === "全部")
+          .filter((item) => item.location === area || area === "全部")
+          .map((item) => {
+            return (
+              <Link
+                key={item.name}
+                href={"/singer/" + item.id}
+                className="font-bold"
+              >
+                <div className="flex flex-col items-center gap-y-4">
+                  <Avatar className="w-[100px] h-[100px]">
+                    <AvatarImage
+                      className="object-cover"
+                      src={item.profileImage}
+                    />
+                    <AvatarFallback>{item.name}</AvatarFallback>
+                  </Avatar>
+                  <div>{item.name}</div>
+                </div>
+              </Link>
+            );
+          })}
         <div></div>
       </div>
     </div>

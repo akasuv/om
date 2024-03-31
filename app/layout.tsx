@@ -32,7 +32,7 @@ export default function RootLayout({
             <div className="pt-[100px]">{children}</div>
             <Player />
           </PlayContext.Provider>
-          <div className="w-full py-3 mt-5 fixed bottom-4">
+          <div className="w-full py-3 mt-[100px]">
             <div className="w-full justify-center flex">
               copyright @ooorange fish
             </div>

@@ -7,45 +7,54 @@ import {
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Music } from "lucide-react";
+import { useState, useEffect } from "react";
+import { type Album } from "@/types";
+import { get } from "@/lib/requests";
+import Link from "next/link";
 
-const newRec = [
-  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
-  { name: "鲜花", pic: "/images/鲜花.jpeg", signer: "回春丹" },
-];
+const NewSongs = () => {
+  const [albums, setAlbums] = useState<Album[]>([]);
 
-const NewSongs = () => (
-  <div>
-    <div className="py-3 text-lg flex items-center gap-x-1 text-lg">
-      <Music /> 新歌上架
+  useEffect(() => {
+    get("/newReleases").then((res) => {
+      setAlbums(res);
+    });
+  }, []);
+
+  return (
+    <div>
+      <div className="py-3 text-lg flex items-center gap-x-1 text-lg font-bold">
+        <Music /> 新歌上架
+      </div>
+      <div>
+        <Carousel
+          opts={{
+            align: "start",
+          }}
+        >
+          <CarouselContent>
+            {albums.map((item, index) => (
+              <CarouselItem key={index} className="lg:basis-1/4">
+                <Link href={"/album/" + item.id}>
+                  <div className="p-1">
+                    <Card className="border-none shadow-none">
+                      <img src={item.coverImage} />
+                      <p className="mt-2">{item.title}</p>
+                      <p className="text-gray-400 text-sm">
+                        {item.artist.name}
+                      </p>
+                    </Card>
+                  </div>
+                </Link>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </div>
     </div>
-    <div className="border-gray-100 border-[1px] p-2 rounded">
-      <Carousel
-        opts={{
-          align: "start",
-        }}
-        className=""
-      >
-        <CarouselContent>
-          {newRec.map((item, index) => (
-            <CarouselItem key={index} className="lg:basis-1/4">
-              <div className="p-1">
-                <Card>
-                  <img src={item.pic} className="" />
-                </Card>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-    </div>
-  </div>
-);
+  );
+};
 
 export default NewSongs;

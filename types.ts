@@ -13,6 +13,8 @@ export type Artist = {
   name: string;
   bio: string;
   profileImage: string;
+  location: string;
+  type: string;
 };
 
 export type Song = {
