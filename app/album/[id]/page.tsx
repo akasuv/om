@@ -1,16 +1,20 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Tracklist from "@/components/TrackList";
 import { type Song, type Album } from "@/types";
 import { get } from "@/lib/requests";
+import AuthContext from "@/context/AuthContext";
 
 const Album = ({ params }: { params: { id: string } }) => {
   const [album, setAlbum] = useState<Album>();
   const [songs, setSongs] = useState<Song[]>([]);
+  const authContext = useContext(AuthContext);
 
   useEffect(() => {
     if (album?.id) {
-      get(`/songsByAlbumId?albumId=${album.id}`).then((res) => setSongs(res));
+      get(
+        `/songsByAlbumId?albumId=${album.id}&userId=${authContext?.user?.id}`,
+      ).then((res) => setSongs(res));
     }
   }, [album?.id]);
 

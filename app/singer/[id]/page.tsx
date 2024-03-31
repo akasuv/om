@@ -59,7 +59,7 @@ const SingerPage = ({ params }: { params: { id: string } }) => {
       <div className="grow">
         <ArtistInfo data={artist} />
       </div>
-      <div className="w-2/3">
+      <div className="w-2/3 px-8">
         <div>
           <div className="text-xl font-bold pb-4">热门歌曲</div>
           <Tracklist data={songs} />

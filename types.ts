@@ -21,4 +21,11 @@ export type Song = {
   duration: string;
   album: Album;
   artist: Artist;
+  filePath: string;
+  isLiked: boolean;
+};
+
+export type User = {
+  id: string;
+  username: string;
 };
