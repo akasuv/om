@@ -7,7 +7,7 @@ import { type Artist } from "@/types";
 import clsx from "clsx";
 
 const typeList = ["全部", "男", "女", "组合"];
-const areaList = ["全部", "内地", "港台", "日本", "韩国"];
+const areaList = ["全部", "内地", "港台", "日本", "欧美"];
 
 const SingerFilter = () => {
   const [type, setType] = useState("全部");
@@ -60,7 +60,7 @@ const SingerFilter = () => {
           })}
         </div>
       </div>
-      <div className="flex flex-row gap-x-6 mt-10 flex-wrap">
+      <div className="flex flex-row gap-8 mt-10 flex-wrap">
         {singers
           .filter((item) => item.type === type || type === "全部")
           .filter((item) => item.location === area || area === "全部")
@@ -84,7 +84,6 @@ const SingerFilter = () => {
               </Link>
             );
           })}
-        <div></div>
       </div>
     </div>
   );

@@ -34,7 +34,7 @@ const NewSongs = () => {
         >
           <CarouselContent>
             {albums.map((item, index) => (
-              <CarouselItem key={index} className="lg:basis-1/4">
+              <CarouselItem key={index} className="lg:basis-1/5">
                 <Link href={"/album/" + item.id}>
                   <div className="p-1">
                     <Card className="border-none shadow-none">

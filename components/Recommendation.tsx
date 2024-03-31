@@ -18,7 +18,7 @@ const Recommendation = () => {
         <Disc3 />
         歌曲推荐
       </div>
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-6 gap-4">
         {albums.map((item, index) => {
           return (
             <div className="h-50 mb-2 hover:text-orange-400" key={index}>

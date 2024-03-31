@@ -55,7 +55,7 @@ export default function Home() {
     Autoplay({ delay: 2000, stopOnInteraction: true }),
   );
   return (
-    <div className="w-[800px] mx-auto flex flex-col gap-y-4 pt-8">
+    <div className="mx-auto flex flex-col gap-y-4 pt-8 px-16">
       <Posters />
       <NewSongs />
       <Recommendation />
